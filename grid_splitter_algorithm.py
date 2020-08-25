@@ -9,7 +9,7 @@ class GridSplitterAlgorithm(object):
         self.amount_of_cols = columns
         
         assert(self.amount_of_cols > 0 and self.amount_of_rows > 0)
-        
+
         self.step_rows = self.height / float(self.amount_of_rows)
         self.step_cols = self.width / float(self.amount_of_cols)
         self.histeresis = histeresis
@@ -24,7 +24,7 @@ class GridSplitterAlgorithm(object):
         grid_col = int(object_x / self.step_cols)
         grid_row = int(object_y / self.step_rows)
         return [grid_row, grid_col]
-    
+
     def check_change(self, object_x, object_y, old_grid, new_grid):
         # NOTE: Object x corresponds to columns and object_y to rows
         diff = np.array(new_grid) - np.array(old_grid)
@@ -54,10 +54,10 @@ class GridSplitterAlgorithm(object):
                     old_grid[1],
                     cols_diff
                 )
-                
+
         # If any, rows or colums change, an update is required
         return ret_cols or ret_rows
-    
+
     def is_out_histeresis(self, obj_pos, step, histeresis, old_grid_val, diff):
         grid_cell = obj_pos / step
         if diff > 0:
@@ -68,7 +68,7 @@ class GridSplitterAlgorithm(object):
                 return True
 
         return False
-    
+
 if __name__ == '__main__':
     obj = GridSplitterAlgorithm(640, 480, 3, 3, 0.1)
     
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     print("new grid: {}".format(grid_pos))
     ret = obj.check_change(object_x,object_y, old_grid, grid_pos)
     print("Change needed? {}".format("True" if ret else "False"))
-    
+
     print("------ No update test ----------")
     old_grid = [2,1]
     object_x = 300
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     print("new grid: {}".format(grid_pos))
     ret = obj.check_change(object_x, object_y, old_grid, grid_pos)
     print("Change needed? {}".format("True" if ret else "False"))
-    
+
     print("------ Histeresis test ----------")
     old_grid = [2,1]
     object_x = 190

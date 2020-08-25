@@ -42,7 +42,7 @@ while True:
 
     cv2.namedWindow("Frames", cv2.WINDOW_NORMAL)
     cv2.imshow("Frames", image)
-	
+
     key=cv2.waitKey(1)
     if key == 27:
-	    break
+        break

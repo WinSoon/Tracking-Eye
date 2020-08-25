@@ -8,7 +8,7 @@ class CameraGrabber(object):
         self.image_width = img_width
         self.image_height = img_height
         self.frame_rate = frame_rate
-        
+
         self.camera = PiCamera()
         self.camera.resolution = (self.image_width, self.image_height)
         self.camera.framerate = self.frame_rate
@@ -22,6 +22,6 @@ class CameraGrabber(object):
         self.rawCapture.truncate(0)
 
         return image
-    
+
 if __name__ == '__main__':
     obj = CameraGrabber()
