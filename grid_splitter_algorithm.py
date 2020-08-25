@@ -1,13 +1,14 @@
 import numpy as np
 
 class GridSplitterAlgorithm(object):
-    def __init__(self, width, height, rows, columns, histeresis):
+    def __init__(self, width, height, grid_size, histeresis):
+        # Note, if histeresis is 0, then it is disabled
         assert(histeresis >= 0 and histeresis <= 1.0)
         self.width = width
         self.height = height
-        self.amount_of_rows = rows
-        self.amount_of_cols = columns
-        
+        self.amount_of_rows = grid_size[0]
+        self.amount_of_cols = grid_size[1]
+
         assert(self.amount_of_cols > 0 and self.amount_of_rows > 0)
 
         self.step_rows = self.height / float(self.amount_of_rows)
@@ -70,8 +71,8 @@ class GridSplitterAlgorithm(object):
         return False
 
 if __name__ == '__main__':
-    obj = GridSplitterAlgorithm(640, 480, 3, 3, 0.1)
-    
+    obj = GridSplitterAlgorithm(640, 480, [3, 3], 0.1)
+
     print("------ Initialization test ----------")
     old_grid = [-1, -1]
     object_x = 100
