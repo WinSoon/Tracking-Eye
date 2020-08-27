@@ -18,8 +18,10 @@ class CameraGrabber(object):
 
     def get_image(self):
         frame = self.camera.capture(self.rawCapture, format="bgr", use_video_port=True)
-        image = copy.deepcopy(frame.array)
-        self.rawCapture.truncate(0)
+        image = None
+        if not frame.array is None:
+            image = copy.deepcopy(frame.array)
+            self.rawCapture.truncate(0)
 
         return image
 
