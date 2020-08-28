@@ -22,34 +22,36 @@ actuators = Actuator(grid_size, [1,1])
 # Initialialing with negative numbers will produce always an update
 old_grid_pos = [-1,-1]
 
+cv2.namedWindow("Frames", cv2.WINDOW_NORMAL)
+
 while True:
     image = cam.get_image()
-    contours = detector.detect_contours(image)
+    if not image is None:
+        contours = detector.detect_contours(image)
 
-    ball_location = detector.detect_circle()
-    if ball_location:
-        if (ball_location[0] > minimum_area) and (ball_location[0] < maximum_area):
+        ball_location = detector.detect_circle()
+        if ball_location:
+            if (ball_location[0] > minimum_area) and (ball_location[0] < maximum_area):
 
-            new_grid_pos = grid.find_grid_position(ball_location[1], ball_location[2])
-            # TODO: Review the histeresis and the update_required condition
-            update_required = grid.check_change(
-                ball_location[1],
-                ball_location[2],
-                old_grid_pos,
-                new_grid_pos)
-            if update_required:
-                actuators.update_output(new_grid_pos[1], new_grid_pos[0])
+                new_grid_pos = grid.find_grid_position(ball_location[1], ball_location[2])
+                # TODO: Review the histeresis and the update_required condition
+                update_required = grid.check_change(
+                    ball_location[1],
+                    ball_location[2],
+                    old_grid_pos,
+                    new_grid_pos)
+                if update_required:
+                    actuators.update_output(new_grid_pos[1], new_grid_pos[0])
 
-            old_grid_pos = new_grid_pos
+                old_grid_pos = new_grid_pos
 
-        elif (ball_location[0] < minimum_area):
-            print("Target isn't large enough, searching")
-        else:
-            print("Target large enough, stopping")
+            elif (ball_location[0] < minimum_area):
+                print("Target isn't large enough, searching")
+            else:
+                print("Target large enough, stopping")
 
-    cv2.namedWindow("Frames", cv2.WINDOW_NORMAL)
-    cv2.imshow("Frames", image)
+        cv2.imshow("Frames", image)
 
-    key=cv2.waitKey(1)
+    key = cv2.waitKey(1)
     if key == 27:
         break
